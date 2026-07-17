@@ -4,6 +4,7 @@ steps:
     commands:
       - echo "hello"
 
+  # 自动部署:push 就跑(你现在的)
   deploy:
     image: appleboy/drone-ssh
     settings:
@@ -14,12 +15,24 @@ steps:
       key:
         from_secret: deploy_ssh_key
       script:
-        - echo "===== 自动部署成功 ====="
-        - whoami
-        - hostname
-        - date
-        - echo "部署时间 $(date)" >> ~/woodpecker_deploy_test.txt
-        - cat ~/woodpecker_deploy_test.txt
+        - echo "自动部署 $(date)" >> ~/woodpecker_deploy_test.txt
     when:
       branch: main
       event: push
+
+  # 手动部署:只有网页点按钮才跑
+  deploy_manual:
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: deploy_host
+      username:
+        from_secret: deploy_user
+      key:
+        from_secret: deploy_ssh_key
+      script:
+        - echo "===== 手动确认部署 ====="
+        - echo "手动部署 $(date)" >> ~/woodpecker_manual_deploy.txt
+        - cat ~/woodpecker_manual_deploy.txt
+    when:
+      event: manual      # ← 关键:只在手动触发时跑
