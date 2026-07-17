@@ -1,24 +1,5 @@
 steps:
-  # 你现在的 hello 步骤...
   hello:
     image: alpine
     commands:
-      - echo "hello"
-
-  # 新增:自动部署
-  deploy:
-    image: appleboy/drone-ssh   # 一个现成的 SSH 部署插件
-    settings:
-      host:
-        from_secret: deploy_host      # 服务器 IP
-      username:
-        from_secret: deploy_user
-      key:
-        from_secret: deploy_ssh_key   # SSH 私钥
-      script:
-        - cd /path/to/app
-        - git pull
-        - docker compose up -d --build
-    when:
-      branch: main          # 只在 main 分支
-      event: push           # 只在 push 时(不在 PR 时)
+      - echo "hello
