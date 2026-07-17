@@ -1,0 +1,6 @@
+steps:
+  - name: hello
+    image: alpine
+    commands:
+      - echo "Hello from Woodpecker!"
+    
