@@ -2,4 +2,4 @@ steps:
   hello:
     image: alpine
     commands:
-      - echo "hello
+      - echo "hello"
