@@ -3,3 +3,23 @@ steps:
     image: alpine
     commands:
       - echo "hello"
+
+  deploy:
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: deploy_host
+      username:
+        from_secret: deploy_user
+      key:
+        from_secret: deploy_ssh_key
+      script:
+        - echo "===== 自动部署成功 ====="
+        - whoami
+        - hostname
+        - date
+        - echo "部署时间 $(date)" >> ~/woodpecker_deploy_test.txt
+        - cat ~/woodpecker_deploy_test.txt
+    when:
+      branch: main
+      event: push
